@@ -7,7 +7,7 @@ image_path = "10493.jpg"
 
 server_ip = "127.0.0.1"
 # FastAPI endpoint URL
-url = f"http://{server_ip}:8000/predict"
+url = f"http://97.90.11.193:8000/predict"
 
 # Read and encode image to base64
 with open(image_path, "rb") as img_file:
