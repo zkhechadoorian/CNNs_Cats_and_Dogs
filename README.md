@@ -12,6 +12,74 @@ This project demonstrates how deep learning can solve real-world classification 
 
 ---
 
+## 🚀 How to Run in Google Colab
+
+Running this project in **Google Colab** is a great way to leverage free GPU resources, which can significantly speed up model training and experimentation—especially if you don't have a powerful local machine. Colab also provides a convenient, cloud-based environment where you can run Jupyter notebooks interactively without any setup hassles.
+
+### **Why Use Google Colab?**
+- **Free GPU/TPU Access:** Accelerate deep learning training and inference.
+- **No Local Setup Required:** Avoid dependency and hardware issues.
+- **Easy Collaboration:** Share and edit notebooks with others in real time.
+- **Persistent Storage:** Save your work directly to Google Drive.
+
+---
+
+### **Step-by-Step Instructions**
+
+1. **Open Google Colab:**  
+   Go to [https://colab.research.google.com/](https://colab.research.google.com/).
+
+2. **Clone the Repository:**  
+   In a new Colab notebook cell, run:
+   ```python
+   !git clone https://github.com/zkhechadoorian/CNNs_Cats_and_Dogs.git
+   %cd CNNs_Cats_and_Dogs
+   ```
+
+3. **Install Dependencies:**  
+   Install all required Python packages:
+   ```python
+   !pip install -r requirements.txt
+   ```
+
+4. **(Optional) Enable GPU:**  
+   - Click `Runtime` > `Change runtime type` > Set "Hardware accelerator" to `GPU`.
+   - This will make training much faster.
+
+5. **Run the Notebooks:**  
+   - In the Colab file browser (left sidebar), navigate to the `research/` directory.
+   - Double-click any notebook (e.g., `st_01.ipynb`) to open it.
+   - Run all cells sequentially.  
+   - **Tip:** Follow the order: `st_01.ipynb` → `st_02.ipynb` → ... → `st_05.ipynb` for a smooth workflow.
+
+6. **Save Your Work:**  
+   - To keep your changes, go to `File > Save a copy in Drive`.
+   - This will save an editable copy of the notebook to your Google Drive.
+
+7. **(Optional) Run the Full Pipeline:**  
+   If you want to execute the entire pipeline from start to finish, run:
+   ```python
+   !python main.py
+   ```
+
+---
+
+**Note:**  
+- You do **not** need to set up a virtual environment in Colab—each session is already isolated.
+- If you want to edit and save multiple notebooks, consider cloning the repo into your Google Drive for persistent access:
+   ```python
+   from google.colab import drive
+   drive.mount('/content/drive')
+   !git clone https://github.com/zkhechadoorian/CNNs_Cats_and_Dogs.git /content/drive/MyDrive/CNNs_Cats_and_Dogs
+   %cd /content/drive/MyDrive/CNNs_Cats_and_Dogs
+   ```
+
+---
+
+Enjoy fast, hassle-free model training and experimentation with Google Colab!
+
+---
+
 ## Project Structure: Cat vs Dog Image Classification (CNN with Docker)
 
 ```
