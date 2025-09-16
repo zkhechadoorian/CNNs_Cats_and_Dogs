@@ -11,6 +11,29 @@ In an increasingly digital and visual world, businesses are seeking intelligent 
 This project demonstrates how deep learning can solve real-world classification problems with high accuracy and reliability. By combining cutting-edge AI with a user-friendly deployment pipeline (Docker + AWS), this solution proves the viability of scalable, cloud-based image recognition platforms — opening doors for monetizable products, services, or SaaS integrations in the pet tech and broader image intelligence market.
 
 ---
+### 📷 Example Outputs
+
+<p align="center">
+  <img src="output/learning_curves_training.png" alt="Sample Cat Image" width="250"/><br>
+  <em>Figure 1: Training and validation accuracy/loss curves for the cat vs dog classifier. These curves help visualize model learning progress and detect overfitting or underfitting.</em>
+</p>
+
+<p align="center">
+  <img src="output/sample_dog.jpg" alt="Sample Dog Image" width="250"/><br>
+  <em>Figure 2: Example of a dog image correctly classified by the model.</em>
+</p>
+
+<p align="center">
+  <img src="output/learning_curve.png" alt="Learning Curve" width="400"/><br>
+  <em>Figure 3: Training and validation accuracy/loss curves over epochs.</em>
+</p>
+
+<p align="center">
+  <img src="output/roc_curve.png" alt="ROC Curve" width="400"/><br>
+  <em>Figure 4: ROC curve showing model discrimination ability between cats and dogs.</em>
+</p>
+
+---
 
 ## 🚀 How to Run in Google Colab
 
