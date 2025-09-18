@@ -10,17 +10,35 @@ In an increasingly digital and visual world, businesses are seeking intelligent 
 
 This project demonstrates how deep learning can solve real-world classification problems with high accuracy and reliability. By combining cutting-edge AI with a user-friendly deployment pipeline (Docker + AWS), this solution proves the viability of scalable, cloud-based image recognition platforms — opening doors for monetizable products, services, or SaaS integrations in the pet tech and broader image intelligence market.
 
+## 🏢 Business Value
+
+This AI-powered cat vs. dog image classifier delivers real-world value for organizations working with animal identification and welfare:
+
+- **Stray Animal Identification:**  
+  Enables municipalities, animal shelters, and NGOs to quickly and accurately identify stray cats and dogs from images. This supports rescue operations, adoption drives, and population management efforts.
+
+- **Operational Efficiency:**  
+  Automates the sorting and cataloging of animal images, reducing manual labor and minimizing human error. Staff can focus on higher-value tasks, improving overall workflow efficiency.
+
+- **Data-Driven Decision Making:**  
+  Facilitates the collection and analysis of statistics on stray animal populations, helping organizations allocate resources more effectively and plan targeted interventions.
+
+- **Scalability:**  
+  The automated approach can be deployed across multiple locations or integrated into mobile apps for field workers, scaling animal identification efforts city- or nation-wide.
+
+By leveraging deep learning for pet identification, this project empowers animal welfare organizations and smart city initiatives to make faster, more impactful decisions.
+
 ---
 ### 📷 Example Outputs
 
 <p align="center">
-  <img src="output/learning_curves_training.png" alt="Sample Cat Image" width="250"/><br>
-  <em>Figure 1: Training and validation accuracy/loss curves for the cat vs dog classifier. These curves help visualize model learning progress and detect overfitting or underfitting.</em>
+  <img src="output/learning_curves_training.png" style="width:100%; display:block; margin:auto;"/><br>
+  <em>Figure 1: Training and validation accuracy/loss curves for the cat vs. dog classifier. These curves illustrate the model’s learning dynamics and can reveal signs of overfitting or underfitting. Note: This result was obtained <strong>without</strong> applying extra augmentation to cat images.<em>
 </p>
 
 <p align="center">
-  <img src="output/sample_dog.jpg" alt="Sample Dog Image" width="250"/><br>
-  <em>Figure 2: Example of a dog image correctly classified by the model.</em>
+  <img src="output/learning_curves_training_augmented.png" style="width:100%; display:block; margin:auto;"/><br>
+  <em>Figure 2: Training and validation accuracy/loss curves for the cat vs. dog classifier. These curves illustrate the model’s learning dynamics and can reveal signs of overfitting or underfitting. Note: This result was obtained <strong>after</strong> applying extra augmentation to cat images.</em>
 </p>
 
 <p align="center">
