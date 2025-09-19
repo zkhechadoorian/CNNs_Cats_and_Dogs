@@ -1,24 +1,32 @@
+# This script launches a Streamlit web application for interactive image classification.
+# Users can upload images of cats or dogs, and the app will display the model's prediction and probabilities.
+# The app also provides an overview of the project, methodology, architecture, and deployment pipeline.
+
 import streamlit as st
 import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
 
-# Load the model
+# Load the trained model with caching to avoid reloading on every interaction
 @st.cache_data()
 def load_model():
+    """
+    Loads the trained Keras model from the specified path.
+
+    Returns:
+        tf.keras.Model: The loaded model.
+    """
     model = tf.keras.models.load_model("artifacts/training/model.h5")
     return model
 
 model = load_model()
 
-# Streamlit app title
-
+# Streamlit app title and project overview
 st.write("""
     # Image Classification Using CNN
     """)
 
 st.markdown('''
-
 ## 1.Overview
 This design doc outlines the development of a web application for Image Classification using a synthetic dataset. The application will utilize Deep learning models that:
 - Evaluates whether the Image will Cat or Dog based on process parameters, different sizes, orientations, or backgrounds.
@@ -80,7 +88,6 @@ The architecture of the Cat vs Dog Image Classification model consists of the fo
 - **Fully Connected Layers:** Perform classification using densely connected layers.
 - **Output Layer:** Provides the final prediction probabilities for cat and dog classes.
 
-
 The MLOps (Machine Learning Operations) pipeline project is designed to create an end-to-end workflow for developing and deploying a web application that performs data preprocessing, model training, model evaluation, and prediction. The pipeline leverages Docker containers for encapsulating code, artifacts, and both the frontend and backend components of the application. The application is deployed on a amazon web service(AWS) to provide EC2 will be used.
 
 The pipeline follows the following sequence of steps:
@@ -104,15 +111,23 @@ The pipeline follows the following sequence of steps:
 The Cat vs Dog Image Classification model demonstrates the successful implementation of a Convolutional Neural Network for image classification tasks. By accurately distinguishing between images of cats and dogs, this project showcases the potential of deep learning algorithms in solving real-world problems involving image analysis. Through this project, we aim to inspire further exploration of CNNs and their applications in various domains, while emphasizing the deployment and monitoring aspects using AWS and Docker for reliable and scalable solutions.
 ''')
 
-
 # File uploader for image input
 file = st.file_uploader("Please upload a Animal image", type=["jpg", "png", "jpeg"])
 
-# Slider for image size
-image_size = 224 #st.sidebar.slider("Select Image Size", 100, 500, 224, step=10)
+# Slider for image size (fixed at 224 for this app)
+image_size = 224
 
-# Function to preprocess and predict
 def import_and_predict(image_data, model):
+    """
+    Preprocesses the uploaded image and makes a prediction using the loaded model.
+
+    Args:
+        image_data (PIL.Image): The uploaded image.
+        model (tf.keras.Model): The trained model.
+
+    Returns:
+        np.ndarray: The prediction probabilities for each class.
+    """
     size = (image_size, image_size)
     image = ImageOps.fit(image_data, size, method=Image.Resampling.LANCZOS)
     img = np.asarray(image)
@@ -120,7 +135,7 @@ def import_and_predict(image_data, model):
     prediction = model.predict(img_reshape)
     return prediction
 
-# Display prediction and statistics
+# Display prediction and statistics if an image is uploaded
 if file is None:
     st.text("Please upload an image file")
 else:
@@ -145,5 +160,5 @@ else:
     st.write(f"Max Probability: {max_probability:.2%}")
     st.write(f"Total Sum of Probabilities: {np.sum(predictions):.2%}")
 
-    
+
 
