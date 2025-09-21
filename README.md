@@ -7,119 +7,89 @@ In an increasingly digital and visual world, businesses are seeking intelligent 
 * **Veterinary & Health Tech:** Streamline intake or diagnostic processes by classifying uploaded pet images.
 * **Content Platforms & Social Media:** Enable automated moderation, tagging, or personalized content recommendations based on pet types.
 * **Smart Home & IoT Devices:** Support intelligent pet monitoring systems that recognize animals captured by smart cameras.
+* **Stray Animal Identification:**  
+  Enables municipalities, animal shelters, and NGOs to quickly and accurately identify stray cats and dogs from images. This supports rescue operations, adoption drives, and population management efforts.
 
 This project demonstrates how deep learning can solve real-world classification problems with high accuracy and reliability. By combining cutting-edge AI with a user-friendly deployment pipeline (Docker + AWS), this solution proves the viability of scalable, cloud-based image recognition platforms — opening doors for monetizable products, services, or SaaS integrations in the pet tech and broader image intelligence market.
 
-## 🏢 Business Value
-
-This AI-powered cat vs. dog image classifier delivers real-world value for organizations working with animal identification and welfare:
-
-- **Stray Animal Identification:**  
-  Enables municipalities, animal shelters, and NGOs to quickly and accurately identify stray cats and dogs from images. This supports rescue operations, adoption drives, and population management efforts.
-
-- **Operational Efficiency:**  
-  Automates the sorting and cataloging of animal images, reducing manual labor and minimizing human error. Staff can focus on higher-value tasks, improving overall workflow efficiency.
-
-- **Data-Driven Decision Making:**  
-  Facilitates the collection and analysis of statistics on stray animal populations, helping organizations allocate resources more effectively and plan targeted interventions.
-
-- **Scalability:**  
-  The automated approach can be deployed across multiple locations or integrated into mobile apps for field workers, scaling animal identification efforts city- or nation-wide.
-
-By leveraging deep learning for pet identification, this project empowers animal welfare organizations and smart city initiatives to make faster, more impactful decisions.
-
 ---
-### 📷 Example Outputs
+### 📷 Dataset Examples 
+
+The images used in this project come from the [Kaggle Dogs vs. Cats](https://www.kaggle.com/competitions/dogs-vs-cats/data) dataset, a widely recognized benchmark for image classification tasks. The dataset contains over 25,000 labeled images of cats and dogs in a variety of poses, backgrounds, and lighting conditions, providing a rich and diverse set of examples for training and evaluating deep learning models. For this project, a small subset of these images was used, with separate folders for cat and dog images to facilitate supervised learning. The diversity in the dataset helps ensure that the trained model can generalize well to new, unseen pet images, making it suitable for real-world applications.
+
+<!-- Example: Cat vs Dog Sample Images Grid -->
+<p align="center">
+  <table>
+    <tr>
+      <td align="center"><img src="assets/Cat/1.jpg" alt="Cat 1" width="120"/><br><em>Cat</em></td>
+      <td align="center"><img src="assets/Cat/2.jpg" alt="Cat 2" width="120"/><br><em>Cat</em></td>
+      <td align="center"><img src="assets/Cat/0.jpg" alt="Cat 3" width="120"/><br><em>Cat</em></td>
+    </tr>
+    <tr>
+      <td align="center"><img src="assets/Dog/10493.jpg" alt="Dog 1" width="120"/><br><em>Dog</em></td>
+      <td align="center"><img src="assets/Dog/11785.jpg" alt="Dog 2" width="120"/><br><em>Dog</em></td>
+      <td align="center"><img src="assets/Dog/9839.jpg" alt="Dog 3" width="120"/><br><em>Dog</em></td>
+    </tr>
+  </table>
+  <em>Figure: Sample images from the training dataset (3 cats and 3 dogs).</em>
+</p>
+
+### 📷 Data Augmentation
+
+Data augmentation is a crucial technique in deep learning that involves generating new training samples by applying random transformations such as rotations, flips, shifts, zooms, and color adjustments to existing images. The primary motivation for data augmentation is to artificially expand the diversity and size of the training dataset without the need to collect additional real-world images. This helps the model generalize better by exposing it to a wider variety of scenarios, reducing the risk of overfitting to the limited original data. In this project, the original sub-dataset contained only 198 images of each class. Data augmentation ensures that the classifier learns to recognize cats and dogs under different poses, lighting conditions, and backgrounds, ultimately leading to a more robust and accurate model when deployed in real-world applications.
+
+<!-- Example: Before and After Data Augmentation Grid -->
+<p align="center">
+  <table>
+    <tr>
+      <th></th>
+      <th align="center">Original</th>
+      <th align="center">Augmented</th>
+    </tr>
+    <tr>
+      <td align="center"><strong>Cat 1</strong></td>
+      <td align="center"><img src="assets/Cat/2.jpg" alt="Cat 1 Original" width="120"/></td>
+      <td align="center"><img src="assets/Cat/2_augmented.jpg" alt="Cat 1 Augmented" width="120"/></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>Cat 2</strong></td>
+      <td align="center"><img src="assets/Cat/cat.86.jpg" alt="Cat 2 Original" width="120"/></td>
+      <td align="center"><img src="assets/Cat/cat.86_augmented.jpg" alt="Cat 2 Augmented" width="120"/></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>Dog 1</strong></td>
+      <td align="center"><img src="assets/Dog/dog.92.jpg" alt="Dog 1 Original" width="120"/></td>
+      <td align="center"><img src="assets/Dog/dog.92_augmented.jpg" alt="Dog 1 Augmented" width="120"/></td>
+    </tr>
+    <tr>
+      <td align="center"><strong>Dog 2</strong></td>
+      <td align="center"><img src="assets/Dog/dog.87.jpg" alt="Dog 2 Original" width="120"/></td>
+      <td align="center"><img src="assets/Dog/dog.87_augmented.jpg" alt="Dog 2 Augmented" width="120"/></td>
+    </tr>
+  </table>
+  <em>Figure: Before and after augmentation examples for cats and dogs. Augmentation includes transformations such as rotation, flipping, color shift, etc.</em>
+</p>
+
+### 📷 Training 
+
+The training process is visualized through a series of learning curves that track the model’s performance over time. The accuracy vs. epochs and loss vs. epochs plots illustrate how the model improves as it is exposed to more data, with accuracy generally increasing and loss decreasing as training progresses. These curves help identify key trends such as underfitting or overfitting by comparing training and validation metrics. Additionally, by experimenting with different numbers of trainable (unfrozen) layers in the base model, we can observe how accuracy and loss vary as a function of the number of retrained layers. This analysis is crucial for fine-tuning transfer learning models, as it reveals the optimal balance between leveraging pre-trained features and adapting the model to the specific dataset. Together, these visualizations provide valuable insights into the model’s learning dynamics and guide decisions for further optimization.
+
+In the context of the images showing accuracy/loss vs. frozen layers, the term freeze_till refers to the number of layers in the pre-trained base model (such as VGG16) that are kept frozen—meaning their weights are not updated during training. Layers after this point are unfrozen and become trainable, allowing the model to adapt more specifically to your dataset. By adjusting freeze_till, you control how much of the pre-trained knowledge is retained versus how much is fine-tuned for your specific task. In the plots, each value of freeze_till corresponds to a different experiment, showing how the model’s accuracy and loss change as more layers are allowed to learn from your data. This helps identify the optimal balance between leveraging pre-trained features and customizing the model for your classification problem.
 
 <p align="center">
   <img src="output/learning_curves_training.png" style="width:100%; display:block; margin:auto;"/><br>
-  <em>Figure 1: Training and validation accuracy/loss curves for the cat vs. dog classifier. These curves illustrate the model’s learning dynamics and can reveal signs of overfitting or underfitting. Note: This result was obtained <strong>without</strong> applying extra augmentation to cat images.<em>
+  <em>Figure 1: Training and validation accuracy/loss curves for the cat vs. dog classifier. These curves illustrate the model’s learning dynamics and can reveal signs of overfitting or underfitting. </em>
 </p>
 
 <p align="center">
-  <img src="output/learning_curves_training_augmented.png" style="width:100%; display:block; margin:auto;"/><br>
-  <em>Figure 2: Training and validation accuracy/loss curves for the cat vs. dog classifier. These curves illustrate the model’s learning dynamics and can reveal signs of overfitting or underfitting. Note: This result was obtained <strong>after</strong> applying extra augmentation to cat images.</em>
+  <img src="output/train_accuracy_vs_frozen_layers.png" alt="ROC Curve" width="400"/><br>
+  <em>Figure 2: Training curve showing model accuracy as a function of retrained layers. The x-axis represents the number of layers that are retrained from the base model.</em>
 </p>
 
 <p align="center">
-  <img src="output/learning_curve.png" alt="Learning Curve" width="400"/><br>
-  <em>Figure 3: Training and validation accuracy/loss curves over epochs.</em>
+  <img src="output/train_loss_vs_frozen_layers.png" alt="ROC Curve" width="400"/><br>
+  <em>Figure 3: Training curve showing model loss as a function of retrained layers. The x-axis represents the number of layers that are retrained from the base model.</em>
 </p>
-
-<p align="center">
-  <img src="output/roc_curve.png" alt="ROC Curve" width="400"/><br>
-  <em>Figure 4: ROC curve showing model discrimination ability between cats and dogs.</em>
-</p>
-
----
-
-## 🚀 How to Run in Google Colab
-
-Running this project in **Google Colab** is a great way to leverage free GPU resources, which can significantly speed up model training and experimentation—especially if you don't have a powerful local machine. Colab also provides a convenient, cloud-based environment where you can run Jupyter notebooks interactively without any setup hassles.
-
-### **Why Use Google Colab?**
-- **Free GPU/TPU Access:** Accelerate deep learning training and inference.
-- **No Local Setup Required:** Avoid dependency and hardware issues.
-- **Easy Collaboration:** Share and edit notebooks with others in real time.
-- **Persistent Storage:** Save your work directly to Google Drive.
-
----
-
-### **Step-by-Step Instructions**
-
-1. **Open Google Colab:**  
-   Go to [https://colab.research.google.com/](https://colab.research.google.com/).
-
-2. **Clone the Repository:**  
-   In a new Colab notebook cell, run:
-   ```python
-   !git clone https://github.com/zkhechadoorian/CNNs_Cats_and_Dogs.git
-   %cd CNNs_Cats_and_Dogs
-   ```
-
-3. **Install Dependencies:**  
-   Install all required Python packages:
-   ```python
-   !pip install -r requirements.txt
-   ```
-
-4. **(Optional) Enable GPU:**  
-   - Click `Runtime` > `Change runtime type` > Set "Hardware accelerator" to `GPU`.
-   - This will make training much faster.
-
-5. **Run the Notebooks:**  
-   - In the Colab file browser (left sidebar), navigate to the `research/` directory.
-   - Double-click any notebook (e.g., `st_01.ipynb`) to open it.
-   - Run all cells sequentially.  
-   - **Tip:** Follow the order: `st_01.ipynb` → `st_02.ipynb` → ... → `st_05.ipynb` for a smooth workflow.
-
-6. **Save Your Work:**  
-   - To keep your changes, go to `File > Save a copy in Drive`.
-   - This will save an editable copy of the notebook to your Google Drive.
-
-7. **(Optional) Run the Full Pipeline:**  
-   If you want to execute the entire pipeline from start to finish, run:
-   ```python
-   !python main.py
-   ```
-
----
-
-**Note:**  
-- You do **not** need to set up a virtual environment in Colab—each session is already isolated.
-- If you want to edit and save multiple notebooks, consider cloning the repo into your Google Drive for persistent access:
-   ```python
-   from google.colab import drive
-   drive.mount('/content/drive')
-   !git clone https://github.com/zkhechadoorian/CNNs_Cats_and_Dogs.git /content/drive/MyDrive/CNNs_Cats_and_Dogs
-   %cd /content/drive/MyDrive/CNNs_Cats_and_Dogs
-   ```
-
----
-
-Enjoy fast, hassle-free model training and experimentation with Google Colab!
-
----
 
 ## Project Structure: Cat vs Dog Image Classification (CNN with Docker)
 
@@ -334,7 +304,14 @@ This step configures helpful tools to **monitor and manage the training process*
 
 Training Stage
 
+
 This is where the model **learns to classify images** by analyzing the dataset over several training cycles. It uses the **preprocessed data**, the **base model**, and the **callbacks** set up earlier.
+
+A key part of this stage is **data augmentation**. The training pipeline applies a variety of random transformations to the input images—such as rotations, flips, shifts, shearing, zooming, brightness, and color shifts. This process artificially increases the diversity of the training data, helping the model generalize better and reducing overfitting.
+
+In particular, **extra augmentation is applied** to improve the model's ability to recognize cats in different scenarios. Augmented images are saved and included in the training set, ensuring the model is exposed to a wide range of visual variations.
+
+By combining original and augmented images, the model is trained to be more robust and accurate when classifying new, unseen pet images.
 
 ---
 
