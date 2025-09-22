@@ -1,5 +1,7 @@
 ## 📊 *AI-Powered Image Classifier for Pet Identification*
 
+This project was originally developed by CompuFlair and modified during their 2025 Bootcamp.
+
 ## Overview
 
 In an increasingly digital and visual world, businesses are seeking intelligent solutions to automatically categorize and filter vast amounts of image data. This project addresses that need by developing an AI-powered image classification system that distinguishes between cats and dogs using Convolutional Neural Networks (CNNs). While the use case may appear simple, the underlying technology has broad implications for industries such as:
@@ -11,6 +13,14 @@ In an increasingly digital and visual world, businesses are seeking intelligent 
   Enables municipalities, animal shelters, and NGOs to quickly and accurately identify stray cats and dogs from images. This supports rescue operations, adoption drives, and population management efforts.
 
 This project demonstrates how deep learning can solve real-world classification problems with high accuracy and reliability. By combining cutting-edge AI with a user-friendly deployment pipeline (Docker + AWS), this solution proves the viability of scalable, cloud-based image recognition platforms — opening doors for monetizable products, services, or SaaS integrations in the pet tech and broader image intelligence market.
+
+### Model Interpretability with Grad-CAM
+
+The trained model's decision-making process can be visualized using Gradient-weighted Class Activation Mapping (Grad-CAM), which highlights the regions of an image that the model focuses on when making predictions. Based on the following results, one can infer that an animal's eyes and face have the strongest impact on their classification label.
+
+![Grad-CAM Results](./assets/gradcam_results.png)
+
+*Figure: Grad-CAM visualization showing model attention areas for sample cat and dog images. Warmer colors (red/orange) indicate regions the model considers most important for classification.*
 
 ---
 ### 📷 Dataset Examples 
@@ -559,9 +569,89 @@ docker run -it --rm -v ~/.aws:/root/.aws image-classification
 This command will launch the Python script inside a clean containerized environment.
 
 ---
-## Results
-The Cat vs Dog classification system was developed using a transfer learning approach based on the VGG16 architecture with frozen convolutional layers and a custom classification head. The model was trained on a small dataset (318 training images and 78 validation images), achieving a validation accuracy of approximately **60.94%** after 5 epochs. While the training accuracy fluctuated (ranging between 37% and 55%), the model showed signs of underfitting, likely due to limited data and minimal fine-tuning (only 6 trainable parameters). Additionally, during evaluation, a critical mismatch occurred between the ground truth labels and the model's output shape—`target.shape=(16, 1)` vs. `output.shape=(16, 2)`—indicating an incompatibility between binary labels (used in the generator) and the model expecting one-hot encoded vectors for categorical cross-entropy. This suggests a misalignment in either the data pipeline (binary vs categorical classification mode) or the loss function setup. Despite these issues, the model pipeline from ingestion to training ran successfully and demonstrates a complete ML lifecycle with Dockerized infrastructure, but would benefit significantly from increasing dataset size, unfreezing layers for fine-tuning, and aligning the evaluation strategy for robust performance measurement.
 
+## Results
+
+# Model Evaluation Results
+
+## Performance Metrics
+
+The trained CNN model was evaluated on a validation dataset with the following results:
+
+### Overall Performance
+- **Loss**: [Insert loss value from scores.json]
+- **Accuracy**: [Insert accuracy value from scores.json]
+
+### Classification Report
+The per-class performance metrics show:
+
+![Classification Metrics](./assets/classification_metrics.png)
+
+- **Precision**: Measures the accuracy of positive predictions for each class
+- **Recall**: Measures the model's ability to identify all instances of each class  
+- **F1-Score**: Harmonic mean of precision and recall, providing a balanced metric
+
+### ROC Curve Analysis
+The Receiver Operating Characteristic (ROC) curve demonstrates the model's ability to distinguish between classes:
+
+![ROC Curve](./assets/roc_curve.png)
+
+- **AUC Score**: [Insert AUC value] - indicates the model's discriminative ability
+
+### Confusion Matrix
+The confusion matrix reveals the model's classification patterns:
+
+![Confusion Matrix](./assets/confusion_matrix.png)
+
+**Key Observations**:
+- More cat images are being falsely labeled as dogs (False Negatives)
+- Fewer dogs are being misclassified as cats
+- This suggests an slight imbalance in the model's ability to distinguish cats from dogs
+
+### Model Interpretability Analysis
+The Grad-CAM visualizations (shown in the Overview section above) provide valuable insights into the model's decision-making process. These heatmaps reveal that the model focuses on relevant anatomical features and characteristic poses when classifying images. However, some visualizations also suggest the model may occasionally focus on background elements or non-discriminative features, indicating potential areas for improvement in feature learning.
+
+## Areas for Improvement
+
+### 1. Data Augmentation Enhancement
+- **Current Issue**: Model struggles with cat classification
+- **Solution**: Implement more diverse augmentation techniques specifically for cat images:
+  - Enhanced rotation and flipping variations
+  - Advanced brightness/contrast adjustments
+  - Elastic transformations to simulate different poses
+
+### 2. Model Architecture Optimization
+- **Transfer Learning**: Experiment with different pre-trained models (EfficientNet, ResNet, DenseNet)
+- **Fine-tuning Strategy**: Adjust the number of frozen layers and fine-tuning approach
+- **Architecture Modifications**: Add dropout layers, batch normalization, or attention mechanisms
+
+### 3. Training Strategy Improvements
+- **Class Weighting**: Implement class weights in the loss function to address classification imbalance
+- **Learning Rate Scheduling**: Use adaptive learning rate schedules (ReduceLROnPlateau, CosineAnnealing)
+- **Early Stopping**: Implement early stopping with patience to prevent overfitting
+
+### 4. Data Quality Enhancement
+- **Data Cleaning**: Remove corrupted or mislabeled images from the dataset
+- **Feature Engineering**: Experiment with different input preprocessing techniques
+- **Ensemble Methods**: Combine multiple models with different architectures or training strategies
+
+### 5. Advanced Evaluation Techniques
+- **Cross-Validation**: Implement k-fold cross-validation for more robust performance estimates
+- **Error Analysis**: Conduct detailed analysis of misclassified images to identify patterns
+- **Threshold Optimization**: Tune classification thresholds for optimal precision-recall trade-off
+
+### 6. Deployment Considerations
+- **Model Compression**: Apply quantization or pruning for efficient deployment
+- **Real-time Performance**: Optimize inference speed for production use
+- **Robustness Testing**: Evaluate model performance on different image qualities and conditions
+
+## Next Steps
+
+1. Implement enhanced data augmentation pipeline
+2. Experiment with different model architectures
+3. Apply class balancing techniques
+4. Conduct comprehensive hyperparameter tuning
+5. Perform detailed error analysis on misclassified samples
 ---
 
 ## Deploy to server
