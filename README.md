@@ -88,7 +88,7 @@ In the context of the images showing accuracy/loss vs. frozen layers, the term f
 
 <p align="center">
   <img src="assets/roc_curve.png" style="width:100%; display:block; margin:auto;"/><br>
-  <em>Figure 1: Training and validation accuracy/loss curves for the cat vs. dog classifier. These curves illustrate the model’s learning dynamics and can reveal signs of overfitting or underfitting. </em>
+  <em>ROC Curve showing the model's ability to distinguish between cats and dogs. The curve plots True Positive Rate vs False Positive Rate at various classification thresholds, with the Area Under the Curve (AUC) indicating overall discriminative performance</em>
 </p>
 
 ## Project Structure: Cat vs Dog Image Classification (CNN with Docker)
