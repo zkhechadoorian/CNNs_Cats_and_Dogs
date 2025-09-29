@@ -87,18 +87,8 @@ The training process is visualized through a series of learning curves that trac
 In the context of the images showing accuracy/loss vs. frozen layers, the term freeze_till refers to the number of layers in the pre-trained base model (such as VGG16) that are kept frozen—meaning their weights are not updated during training. Layers after this point are unfrozen and become trainable, allowing the model to adapt more specifically to your dataset. By adjusting freeze_till, you control how much of the pre-trained knowledge is retained versus how much is fine-tuned for your specific task. In the plots, each value of freeze_till corresponds to a different experiment, showing how the model’s accuracy and loss change as more layers are allowed to learn from your data. This helps identify the optimal balance between leveraging pre-trained features and customizing the model for your classification problem.
 
 <p align="center">
-  <img src="output/learning_curves_training.png" style="width:100%; display:block; margin:auto;"/><br>
+  <img src="assets/roc_curve.png" style="width:100%; display:block; margin:auto;"/><br>
   <em>Figure 1: Training and validation accuracy/loss curves for the cat vs. dog classifier. These curves illustrate the model’s learning dynamics and can reveal signs of overfitting or underfitting. </em>
-</p>
-
-<p align="center">
-  <img src="output/train_accuracy_vs_frozen_layers.png" alt="ROC Curve" width="400"/><br>
-  <em>Figure 2: Training curve showing model accuracy as a function of retrained layers. The x-axis represents the number of layers that are retrained from the base model.</em>
-</p>
-
-<p align="center">
-  <img src="output/train_loss_vs_frozen_layers.png" alt="ROC Curve" width="400"/><br>
-  <em>Figure 3: Training curve showing model loss as a function of retrained layers. The x-axis represents the number of layers that are retrained from the base model.</em>
 </p>
 
 ## Project Structure: Cat vs Dog Image Classification (CNN with Docker)
